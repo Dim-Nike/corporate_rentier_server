@@ -31,7 +31,7 @@ class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
         try:
             project = Projects.objects.get(pk=pk)
             category_services_id = project.category_services.id
-            similar_projects = Projects.objects.filter(category_services=category_services_id)
+            similar_projects = Projects.objects.filter(category_services=category_services_id).exclude(id=pk)
             serializer = ProjectsSerializer(similar_projects, many=True)
             return Response(serializer.data)
         except Projects.DoesNotExist:

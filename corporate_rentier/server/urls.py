@@ -16,4 +16,4 @@ urlpatterns = [
     path('read/', include(router.urls)),
     path('create/FeedBack', FeedBackCreateAPIView.as_view()),
     path('read/FeedBack', FeedBackListAPIView.as_view()),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
