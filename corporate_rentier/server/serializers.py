@@ -29,11 +29,19 @@ class QuotesSerializer(serializers.ModelSerializer):
 
 class ProjectsSerializer(serializers.ModelSerializer):
     quotes = QuotesSerializer(many=True, read_only=True)
+    photo_realization = serializers.SerializerMethodField()
+
     class Meta:
         model = Projects
         fields = ['id', 'name', 'category_services', 'bw_preview_photo',
                   'c_preview_photo', 'title_photo', 'dsc_project', 'dsc_task',
                   'photo_task', 'dsc_realization', 'photo_realization', 'quotes']
+
+    def get_photo_realization(self, obj):
+        request = self.context.get('request')
+        if obj.photo_realization:
+            return request.build_absolute_uri(obj.photo_realization)
+        return None
 
 class FeedBackSerializer(serializers.ModelSerializer):
     class Meta:

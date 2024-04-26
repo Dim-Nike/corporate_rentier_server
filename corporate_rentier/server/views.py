@@ -32,7 +32,7 @@ class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
             project = Projects.objects.get(pk=pk)
             category_services_id = project.category_services.id
             similar_projects = Projects.objects.filter(category_services=category_services_id).exclude(id=pk)
-            serializer = ProjectsSerializer(similar_projects, many=True)
+            serializer = ProjectsSerializer(similar_projects, many=True, context={'request': request})
             return Response(serializer.data)
         except Projects.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
