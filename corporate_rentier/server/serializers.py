@@ -6,17 +6,19 @@ class DignitiesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Dignities
         fields = ['id', 'name', 'dsc']
-
-class ServicesSerializer(serializers.ModelSerializer):
-    included_in_the_service = DignitiesSerializer(many=True, read_only=True)
-    class Meta:
-        model = Services
-        fields = ['id', 'name', 'category', 'dsc', 'included_in_the_service']
-
 class DcsCatServicesSerializer(serializers.ModelSerializer):
     class Meta:
         model = DcsCatServices
         fields = ['id', 'category', 'name', 'dsc']
+
+class ServicesSerializer(serializers.ModelSerializer):
+    included_in_the_service = DcsCatServicesSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Services
+        fields = ['id', 'name', 'category', 'dsc', 'included_in_the_service']
+
+
 
 
 
